@@ -1,0 +1,112 @@
+/* Google font 'Nanum Gothic'  */
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+/* Google font 'Raleway' */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap');
+
+:root{
+    /* Variables */
+    --main-fontstack: 'Nanum Gothic', san-serif;
+    --sec-fontstack:'Raleway', san-serif;
+
+    --main-bg: rgb(182, 172, 202);
+    --card-bg: #fff;
+    
+}
+/* Root Styles */
+ * h1,h2,h3,h4,p,a{
+    font-family: var(--main-fontstack);
+ } 
+body{
+    background-color: var(--main-bg);
+}
+/* Layout */
+#page-wrapper{
+    height:100%;
+    width:100%;
+    margin: 0px;
+
+}
+#app-wrapper{
+    display:  flex;
+    flex-direction: column;
+
+    padding:20px;
+    margin: 0 auto;
+    
+}
+#content-container{
+    display: grid;
+    place-items: center ;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
+    /* grid-template-rows: repeat(1fr , 4); */
+    grid-auto-flow: row;
+    grid-gap:20px;
+
+    height: auto;
+    
+}
+/* header layout */
+header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+#filter{
+    margin-right:3.5em;
+    padding:5px;
+    height: 20px;
+    border-radius: 10px;
+    border:1px solid grey;
+}
+#filter::placeholder{
+    text-align: right;
+    font-family: var(--sec-fontstack);
+}
+/* Card Styles */
+.card{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    border:1px solid grey;
+    background-color: var(--card-bg);
+}
+.img-container{
+    display: grid;
+    place-items: center;
+    padding: 5px;
+}
+.card img{
+    height: 5em;
+    width: 5em;
+    border-radius: 50%;
+    border:2px solid grey;
+}
+.data-container{
+    text-align: left;
+    padding: 20px;
+}
+.data-container span{
+    font-family: var(--sec-fontstack);
+    font-size: 12px;
+}
+.data-container a{
+    font-weight: bold;
+}
+/* modal Styles */
+.modal{
+    display: none;
+
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
