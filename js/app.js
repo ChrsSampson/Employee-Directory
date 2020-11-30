@@ -52,32 +52,6 @@ function displayEmployees(employeeData){
     
 }
 
-// // Loop Create cards Looping through fetch data
-// function createCards(data){
-//     //format data
-//     console.info(data);
-//     const array = data.results;
-
-//     for(let i = 0; i < array.length; i++){
-//         //Create Card container (grid child)
-//         const cardContainer = document.createElement('div');
-//         cardContainer.className = "card";
-//         //Construct Contents of card
-//         cardContainer.innerHTML = `
-//             <div class="img-container">
-//                 <img src="${array[i].picture['medium']}">
-//             </div>
-//             <div class="data-container">
-//                 <a>${array[i].name['first']} ${array[i].name['last']}</a>
-//                 <span>${array[i].email}</span>
-//                 <span>${array[i].location['city']}, ${array[i].location['state']}</span>
-//             </div>
-//         `;
-//         // Add card to the Grid Container
-//         mainContainer.appendChild(cardContainer);
-//     }
-// }
-
 // create array of names for the seach function
  function createSearchArray(data){
     const nameArray = [];
