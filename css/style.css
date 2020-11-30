@@ -29,6 +29,7 @@ body{
 #app-wrapper{
     display:  flex;
     flex-direction: column;
+    justify-content: space-around;
 
     padding:20px;
     margin: 0 auto;
@@ -36,13 +37,12 @@ body{
 }
 #content-container{
     display: grid;
-    place-items: center ;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
-    /* grid-template-rows: repeat(1fr , 4); */
-    grid-auto-flow: row;
-    grid-gap:20px;
-
-    height: auto;
+    grid-template-columns: repeat(auto-fit, minmax(auto, 400px)); 
+    justify-items: center;    
+    grid-gap:2em;
+    
+    margin:0 4em 0 4em;
+    height:100%;
     
 }
 /* header layout */
@@ -51,11 +51,14 @@ header{
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+
+    margin:0 2em 0 2em;
 }
 #filter{
-    margin-right:3.5em;
+    width: 250px;
     padding:5px;
-    height: 20px;
+    height: 30px;
+    font-size: 20px;
     border-radius: 10px;
     border:1px solid grey;
 }
@@ -80,28 +83,33 @@ header{
     place-items: center;
     padding: 5px;
 }
-.card img{
+.profile-img{
     height: 5em;
+    margin:10px;
     width: 5em;
     border-radius: 50%;
     border:2px solid grey;
 }
 .data-container{
     text-align: left;
-    padding: 20px;
+    padding: 5px;
 }
-.data-container span{
+.data-container p{
     font-family: var(--sec-fontstack);
     font-size: 12px;
 }
-.data-container a{
+.name{
+    margin:0;
+    font-size: 20px;
     font-weight: bold;
 }
 /* modal Styles */
+
 .modal{
     display: none;
+    place-items: center;
 
-    position: fixed;
+    position: absolute;
     z-index: 1;
     left: 0;
     top: 0;
@@ -109,4 +117,55 @@ header{
     height: 100%;
     overflow: auto;
     background-color: rgba(0,0,0,0.4);
+}
+#close{
+    position: absolute;
+    top:15px;
+    left:15px;
+    font-size: 40px;
+    cursor: pointer;
+    color: rgb(200, 55, 55);
+}
+#close:hover{
+    color: rgb(119, 33, 33);
+    font-size: 50px;
+}
+#modal-content{
+    display: grid;
+    place-items: center;
+    text-align: center;
+
+    padding:10px;
+    max-width: 500px;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+}
+.modal-img{
+    border-radius: 50%;
+    
+    margin:40px;
+    
+    height:150px;
+    width: 150px;
+}
+#modal-nav{
+    display: flex;
+    flex-direction: row;
+    
+}
+.modal-btn{
+    text-align: center;
+    height:50px;
+    width: 50px;
+    font-size: 45px;
+    background-color: rgba(0,0,0,0.6);
+    cursor: pointer;
+}
+.modal-btn:hover{
+    background-color: rgba(0,0,0,0.8);
+    color: white;
+}
+
+#error{
+    display: block;
 }

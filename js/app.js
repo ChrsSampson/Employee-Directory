@@ -1,54 +1,82 @@
 // Selectors
-const mainContainer = document.getElementById('content-container');
+const contentContainer = document.getElementById('content-container');
 const filter = document.getElementById('filter');
-const cardContainers = mainContainer.children;
+const cardContainers = contentContainer.children;
+
+const modalContent = document.getElementById('modal-content');
+const modalContainer = document.getElementById('modal-container');
+
+// Global Variables
+let employees = [];
+
 // Fetch Function
-const fetchUrl = 'https://randomuser.me/api/?results=12'
+const fetchUrl = 'https://randomuser.me/api/?results=12&&nat=us'
     
 
 // OLD ONE
 fetch(fetchUrl)
     .then(res => res.json())
-    .then(data => {
-        createCards(data)
-        createSearchArray(data)
-    })
+    .then(res => res.results)
+    .then(displayEmployees)
+    // .then(data => {
+    //     createEmployeeObj(data)
+    //     createSearchArray(data)
+    // })
     .catch(error => console.warn('There was a fetch error', error));
 
 
-// Test function to test the grid
-// for(let i=0; i < 12; i++){
-//     const cardContainer = document.createElement('div');
-//     cardContainer.className = "card";
-//     cardContainer.innerHTML = `<a>card title</a>`;
-//     mainContainer.appendChild(cardContainer);
-// }
+function displayEmployees(employeeData){
 
-// Loop Create cards Looping through fetch data
-function createCards(data){
-    //format data
-    console.info(data);
-    const array = data.results;
+    employees = employeeData;
+    let employeeHTML = '';
 
-    for(let i = 0; i < array.length; i++){
-        //Create Card container (grid child)
-        const cardContainer = document.createElement('div');
-        cardContainer.className = "card";
-        //Construct Contents of card
-        cardContainer.innerHTML = `
-            <div class="img-container">
-                <img src="${array[i].picture['medium']}">
-            </div>
-            <div class="data-container">
-                <a>${array[i].name['first']} ${array[i].name['last']}</a>
-                <span>${array[i].email}</span>
-                <span>${array[i].location['city']}, ${array[i].location['state']}</span>
-            </div>
-        `;
-        // Add card to the Grid Container
-        mainContainer.appendChild(cardContainer);
-    }
+    employees.forEach( (employee, index) => {
+       let name = employee.name;
+       let email = employee.email;
+       let city = employee.location.city;
+       let picture = employee.picture;
+
+       employeeHTML = `
+            <div class="card" data-index="${index}">
+                <img class="profile-img" src="${picture.large}" />
+                <div class="data-container">
+                    <h2 class="name">${name.first} ${name.last}</h2>
+                    <p class="email">${email}</p>
+                    <p class="adress">${city}</p>
+                </div>
+            <div>
+       `
+       contentContainer.innerHTML += employeeHTML;
+    });
+
+    
 }
+
+// // Loop Create cards Looping through fetch data
+// function createCards(data){
+//     //format data
+//     console.info(data);
+//     const array = data.results;
+
+//     for(let i = 0; i < array.length; i++){
+//         //Create Card container (grid child)
+//         const cardContainer = document.createElement('div');
+//         cardContainer.className = "card";
+//         //Construct Contents of card
+//         cardContainer.innerHTML = `
+//             <div class="img-container">
+//                 <img src="${array[i].picture['medium']}">
+//             </div>
+//             <div class="data-container">
+//                 <a>${array[i].name['first']} ${array[i].name['last']}</a>
+//                 <span>${array[i].email}</span>
+//                 <span>${array[i].location['city']}, ${array[i].location['state']}</span>
+//             </div>
+//         `;
+//         // Add card to the Grid Container
+//         mainContainer.appendChild(cardContainer);
+//     }
+// }
 
 // create array of names for the seach function
  function createSearchArray(data){
@@ -61,20 +89,20 @@ function createCards(data){
         nameArray.push(name);
     }
     
-    console.info('Create Name Array:', nameArray)
+    console.info('CreateSearchArray Output:', nameArray)
     return nameArray;
  } 
 
 //Search function (recieves names from createSearch Array)
 function search(){
-    const cardArray = mainContainer.children;
+    const cardArray = contentContainer.children;
     const searchTerm = filter.value;
     for(let i = 0; i < cardArray.length; i++){
         if(cardArray[i].textContent.includes(searchTerm)){
-            cardArray[i].style.display = "block";
+            cardArray[i].style.display = "flex";
         }
         else if(searchTerm == ""){
-            cardArray[i].style.display = "block";
+            cardArray[i].style.display = "flex";
         }
         else{
             cardArray[i].style.display = "none";
@@ -82,24 +110,72 @@ function search(){
       
     }
     console.log(cardArray[3].textContent);    
-}
+};
 
 
 //create Modal display
-function modal(target){
-    console.log(target);
-    const modalContent = document.getElementById('modal-content');
-}
+function displayModal(index){
+  
+    let {name, dob, phone, email, location: {city, street, state, postcode}, picture} = employees[index];
+    let date = new Date(dob.date);
+    const modalHTML = `
+        <img class="modal-img" src="${picture.large}" />
+        <div class="text-container">
+            <h2 class="name">${name.first} ${name.last}</h2>
+            <p class="email">${email}</p>
+            <p class="address">${city}</p>
+            <hr />
+            <p>${phone}</p>
+            <p class="address">${street['name']}, ${state} ${postcode}</p>
+            <p>Birthday: ${date.getMonth()}/${date.getDate()}/${date.getFullYear()}</p>
+        </div>
+    `;
 
 
+    modalContainer.style.display = "grid";
+    modalContent.innerHTML = modalHTML;
+};
 // Event listeners
+
+// filter event listenter
 filter.addEventListener('keyup', search);
 
-mainContainer.addEventListener('click', (e) =>{
-    console.log(e.target);
-    if(e.target !== mainContainer){
+//Used for next and precious events
+ let currentIndex ='';
+// modal Event listener
+contentContainer.addEventListener('click', (e) =>{
+    const next = document.getElementById('next');
+    const previous = document.getElementById('previous');
+    
+    if(e.target !== contentContainer){
         let card = e.target.closest('.card');
-        let cardContent = card.getAttribute();
-        console.log(cardContent);
-    }    
+        let index = card.getAttribute('data-index');
+        currentIndex = index;
+        displayModal(index);
+    }
+     
+});
+
+
+// modal close event listenet
+const modalClose = document.getElementById('close');
+
+modalClose.addEventListener('click', (e)=>{
+    modalContainer.style.display = "none";
+});
+
+
+//modal next and previous
+const navContainer = document.getElementById('modal-nav')
+
+navContainer.addEventListener('click', (e)=>{
+    if(e.target.id == 'right-arrow'){
+        currentIndex++
+        displayModal(currentIndex)
+    }
+    if(e.target.id == 'left-arrow'){
+        currentIndex--
+        displayModal(currentIndex)
+    }
+    
 });
