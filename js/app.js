@@ -6,6 +6,9 @@ const cardContainers = contentContainer.children;
 const modalContent = document.getElementById('modal-content');
 const modalContainer = document.getElementById('modal-container');
 
+const rightArrow = document.getElementById('next')
+const leftArrow = document.getElementById('previous')
+
 // Global Variables
 let employees = [];
 
@@ -127,16 +130,36 @@ contentContainer.addEventListener('click', (e) =>{
         currentIndex = index;
         displayModal(index);
     }
+
+    hideBtn(currentIndex, 0, 11);
      
 });
 
 
-// modal close event listenet
+// modal close event listener
 const modalClose = document.getElementById('close');
 
 modalClose.addEventListener('click', (e)=>{
     modalContainer.style.display = "none";
 });
+
+
+// hide modal buttons when index is max
+function hideBtn(i, min, max){
+    
+    if(i >= max){
+        rightArrow.style.display = 'none'
+    }
+    else if (i == min){
+        leftArrow.style.display = 'none'
+    }
+    else{
+        rightArrow.style.display = 'block'
+        leftArrow.style.display = 'block'
+    }    
+
+}
+
 
 
 //modal next and previous
@@ -147,9 +170,13 @@ navContainer.addEventListener('click', (e)=>{
         currentIndex++
         displayModal(currentIndex)
     }
+   
     if(e.target.id == 'left-arrow'){
         currentIndex--
         displayModal(currentIndex)
+            
     }
     
+    hideBtn(currentIndex, 0, 11);
+
 });

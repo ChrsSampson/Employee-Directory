@@ -10,6 +10,10 @@
 
     --main-bg: rgb(182, 172, 202);
     --card-bg: #fff;
+    --card-hover: rgb(148, 148, 148);
+
+    --btn-bg: rgba(8, 8, 8, 0.767);
+    --btn-font:rgb(143, 115, 180);
     
 }
 /* Root Styles */
@@ -126,10 +130,7 @@ header{
     cursor: pointer;
     color: rgb(200, 55, 55);
 }
-#close:hover{
-    color: rgb(119, 33, 33);
-    font-size: 50px;
-}
+
 #modal-content{
     display: grid;
     place-items: center;
@@ -151,6 +152,8 @@ header{
 #modal-nav{
     display: flex;
     flex-direction: row;
+    position: absolute;
+    top:10px;
     
 }
 .modal-btn{
@@ -158,14 +161,27 @@ header{
     height:50px;
     width: 50px;
     font-size: 45px;
-    background-color: rgba(0,0,0,0.6);
+    color: var(--btn-font);
+    background-color: rgba(0, 0, 0, 0.794);
     cursor: pointer;
-}
-.modal-btn:hover{
-    background-color: rgba(0,0,0,0.8);
-    color: white;
 }
 
 #error{
     display: block;
+}
+
+
+/* Transitions */
+#card:hover{
+    background-color: var(--card-hover);
+}
+
+#close:hover{
+    color: rgb(119, 33, 33);
+    font-size: 50px;
+}
+
+.modal-btn:hover{
+    background-color: rgba(87, 87, 87, 0.733);
+    color: white;
 }
